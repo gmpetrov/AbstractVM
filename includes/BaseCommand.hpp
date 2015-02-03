@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   BaseCommand.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/03 18:42:52 by gpetrov          ###   ########.fr       */
+/*   Created: 2015/02/03 17:49:44 by gpetrov           #+#    #+#             */
+/*   Updated: 2015/02/03 18:42:32 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "VM.hpp"
+#ifndef BASE_COMMAND_HPP
+# define BASE_COMMAND_HPP
 
-int		main(void){
-	pushCommand push;
-	std::cout << push.getName() << std::endl;
-	return 0;
-}
+# include <iostream>
+
+class BaseCommand{
+
+	public:
+		BaseCommand(std::string name);
+		BaseCommand(const BaseCommand & src);
+		virtual ~BaseCommand() = 0;
+		BaseCommand & 	operator=(BaseCommand const & rhs);
+		std::string 	getName();
+	protected:
+		BaseCommand();
+	private:
+		std::string const	_name;
+
+};
+
+#endif

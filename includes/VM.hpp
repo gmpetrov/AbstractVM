@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   VM.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/03 18:42:52 by gpetrov          ###   ########.fr       */
+/*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
+/*   Updated: 2015/02/03 18:40:16 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "VM.hpp"
+#ifndef VM_HPP
+# define VM_HPP
 
-int		main(void){
-	pushCommand push;
-	std::cout << push.getName() << std::endl;
-	return 0;
-}
+# include <iostream>
+# include "pushCommand.hpp"
+
+
+class VM{
+
+	public:
+		VM();
+		VM(const VM & src);
+		~VM();
+		VM & 	operator=(VM const & rhs);
+
+};
+
+#endif

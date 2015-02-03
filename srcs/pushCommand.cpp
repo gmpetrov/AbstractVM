@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   pushCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/03 18:42:52 by gpetrov          ###   ########.fr       */
+/*   Created: 2015/02/03 17:58:33 by gpetrov           #+#    #+#             */
+/*   Updated: 2015/02/03 18:37:02 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "VM.hpp"
+#include "pushCommand.hpp"
 
-int		main(void){
-	pushCommand push;
-	std::cout << push.getName() << std::endl;
-	return 0;
+pushCommand::pushCommand() : BaseCommand("push"){
+
+}
+
+pushCommand::pushCommand(pushCommand const & src){
+	*this = src;
+}
+
+pushCommand::~pushCommand(){
+
+}
+
+pushCommand & 	pushCommand::operator=(pushCommand const & rhs){
+	(void)rhs;
+	return *this;
 }

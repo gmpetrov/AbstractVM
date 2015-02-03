@@ -6,7 +6,7 @@
 #    By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/03 16:31:34 by gpetrov           #+#    #+#              #
-#    Updated: 2015/02/03 17:20:01 by gpetrov          ###   ########.fr        #
+#    Updated: 2015/02/03 17:22:52 by gpetrov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,21 +20,23 @@ SRC_FILES = $(shell find $(SRC_DIR) -type f -print | grep "\.cpp")
 
 OBJS	= $(SRC_FILES:srcs/%.cpp=$(OBJ_DIR)/%.o)
 
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -pedantic
 
 CC 		= g++
+
+INC 	= -I includes
 
 all: $(NAME)
 
 $(NAME): MKDIR_OBJ_DIR $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(INC)
 	@echo "\n=> Compiling AbstractVM [\033[32mDONE\033[m]"
 
 MKDIR_OBJ_DIR:
 	@mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@$(CC) -o $@ -c $< $(CFLAGS)
+	@$(CC) -o $@ -c $< $(CFLAGS) $(INC)
 	@echo -n .
 
 clean:
