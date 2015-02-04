@@ -6,14 +6,18 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/04 16:51:38 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/04 17:14:45 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "VM.hpp"
 
-int		main(void){
-
+int		main(int ac, char **av){
+	(void)av;
+	if (ac == 1)
+		VM vm;
+	else
+		VM vm(av[1]);
 	return 0;
 }
