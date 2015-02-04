@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushCommand.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:58:33 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/03 18:36:04 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/04 16:49:15 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_COMMAND_HPP
 
 # include <iostream>
+# include <boost/algorithm/string.hpp>
 # include "BaseCommand.hpp"
 
 class pushCommand : public BaseCommand{

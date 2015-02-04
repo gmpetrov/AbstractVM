@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   VM.hpp                                             :+:      :+:    :+:   */
+/*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/04 16:56:51 by gmp              ###   ########.fr       */
+/*   Created: 2015/02/04 16:54:05 by gmp               #+#    #+#             */
+/*   Updated: 2015/02/04 16:55:53 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VM_HPP
-# define VM_HPP
+#include "Parser.hpp"
 
-# include <iostream>
-# include <boost/algorithm/string.hpp>
-# include "pushCommand.hpp"
+Parser::Parser(){
+}
 
+Parser::Parser(Parser const & src){
+	*this = src;
+}
 
-class VM{
+Parser::~Parser(){
 
-	public:
-		VM();
-		VM(const VM & src);
-		~VM();
-		VM & 	operator=(VM const & rhs);
-		void 	parse();
+}
 
-};
-
-#endif
+Parser & 	Parser::operator=(Parser const & rhs){
+	(void)rhs;
+	return *this;
+}

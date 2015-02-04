@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/03 18:42:52 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/04 16:51:38 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "VM.hpp"
 
 int		main(void){
-	pushCommand push;
-	std::cout << push.getName() << std::endl;
+
 	return 0;
 }
