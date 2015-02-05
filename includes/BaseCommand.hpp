@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:49:44 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/03 18:42:32 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/05 13:32:28 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <iostream>
 
 class BaseCommand{
-
 	public:
 		BaseCommand(std::string name);
 		BaseCommand(const BaseCommand & src);
@@ -27,7 +26,6 @@ class BaseCommand{
 		BaseCommand();
 	private:
 		std::string const	_name;
-
 };
 
 #endif

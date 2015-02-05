@@ -6,7 +6,7 @@
 #    By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/03 16:31:34 by gpetrov           #+#    #+#              #
-#    Updated: 2015/02/03 17:22:52 by gpetrov          ###   ########.fr        #
+#    Updated: 2015/02/05 16:44:07 by gpetrov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC_FILES = $(shell find $(SRC_DIR) -type f -print | grep "\.cpp")
 
 OBJS	= $(SRC_FILES:srcs/%.cpp=$(OBJ_DIR)/%.o)
 
-FLAGS	= -Wall -Wextra -Werror -pedantic
+FLAGS	= -g -Wall -Wextra -Werror -pedantic
 
 CC 		= g++
 
