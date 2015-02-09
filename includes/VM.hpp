@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/05 13:30:44 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 15:16:30 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include "pushCommand.hpp"
 # include "Int8.hpp"
+# include "Int16.hpp"
 
 
 class VM{

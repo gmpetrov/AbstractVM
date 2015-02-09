@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 15:02:43 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 15:13:11 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 // # include <boost/algorithm/string.hpp>
 # include "IOperand.hpp"
 // # include "OperandFactory.hpp"
-# include "Int8.hpp"
-# include "Int16.hpp"
+// # include "Int8.hpp"
+// # include "Int16.hpp"
 
 class Int8;
 class Int16;
