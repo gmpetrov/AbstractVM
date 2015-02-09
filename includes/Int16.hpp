@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Int8.cpp                                           :+:      :+:    :+:   */
+/*   Int16.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/05 12:52:25 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 14:56:31 by gpetrov          ###   ########.fr       */
+/*   Created: 2015/02/09 14:47:49 by gpetrov           #+#    #+#             */
+/*   Updated: 2015/02/09 15:05:25 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Int8.hpp"
+// #ifndef INT16_HPP
+// # define INT16_HPP
 
-Int8::Int8(int8_t nb) : OperandTemplate<Int8, int8_t>(nb, 0){
+// # include "OperandTemplate.hpp"
 
-}
+// class Int16 : public OperandTemplate<Int16, int16_t> {
+// 	public:
+// 		Int16(int16_t nb);
+// 		Int16(const Int16 & src);
+// 		virtual ~Int16();
+// 		Int16 & 	operator=(Int16 const & rhs);
+// 	private:
+// 		Int16();
+// };
 
-Int8::Int8(Int8 const & src) : OperandTemplate<Int8, int8_t>(src){
-	*this = src;
-}
-
-Int8::~Int8(){
-
-}
-
-Int8 & 	Int8::operator=(Int8 const & rhs){
-	(void)rhs;
-	return *this;
-}
-
-/*GETTERS & SETTERS*/
+// #endif

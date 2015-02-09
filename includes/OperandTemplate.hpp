@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 12:47:42 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 15:02:43 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,81 @@
 # include <stdint.h>
 # include <typeinfo>
 # include <stdlib.h>
+# include <string>
 // # include <boost/algorithm/string.hpp>
 # include "IOperand.hpp"
-# include "OperandFactory.hpp"
+// # include "OperandFactory.hpp"
 # include "Int8.hpp"
-// # include "BaseCommand.hpp"
-
+# include "Int16.hpp"
 
 class Int8;
+class Int16;
 
 template <typename T, typename N>
 class OperandTemplate : public IOperand {
 	public: 
-		typedef enum { Int8, Int16, Int32, Float, Double} eOperandType;
-		OperandTemplate<T, N>(N nb){ this->_value = nb; };
+		typedef enum { INT8 = 0, INT16 = 1, INT32 = 2, FLOAT = 3, DOUBLE = 4} eOperandType;
+		OperandTemplate<T, N>(N nb, int type){ this->_value = nb; this->_type = static_cast<eOperandType>(type); };
 		OperandTemplate<T, N>(const OperandTemplate<T, N> & src){ *this = src; };
 		~OperandTemplate<T, N>(){};
 		OperandTemplate<T, N> & 	operator=(OperandTemplate<T, N> const & rhs){ (void)rhs; return *this; };
-		virtual OperandTemplate<T, N> const * operator+(IOperand const & rhs) const{
-			// const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
-			// OperandTemplate<T, N> *ptr = new OperandTemplate<T, N>(this->_value + tmp->getValue());
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(Int8, "42"));
-			return ptr;
-			// return this->createOperand(Int8, "42");
+		virtual eOperandType getType(void) const{
+			return this->_type;
 		}
+
+		/* OPERATORS OVERLOAD */
+
+		virtual OperandTemplate<T, N> const * operator+(IOperand const & rhs) const{
+			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value + tmp->getValue())));
+			return ptr;
+		}
+
+		virtual IOperand const * operator-( IOperand const & rhs ) const{
+			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value - tmp->getValue())));
+			return ptr;
+		}
+
+		virtual IOperand const * operator*( IOperand const & rhs ) const{
+			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value * tmp->getValue())));
+			return ptr;
+		}
+
+		virtual IOperand const * operator/( IOperand const & rhs ) const{
+			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value / tmp->getValue())));
+			return ptr;
+		}
+
+		virtual IOperand const * operator%( IOperand const & rhs ) const{
+			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value % tmp->getValue())));
+			return ptr;
+		}
+
+		/* Factory */
+
 		IOperand const * createInt8( std::string const & value ) const{
-			return new OperandTemplate<class Int8, int8_t>(atoi(value.c_str()));
+			return new OperandTemplate<class Int8, int8_t>(atoi(value.c_str()), this->getType());
+		}
+
+		IOperand const * createInt16( std::string const & value ) const{
+			return new OperandTemplate<class Int16, int16_t>(atoi(value.c_str()), this->getType());	
 		}
 
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const{
 			IOperand const * (OperandTemplate<T, N>::* tab[])(std::string const & value)const = { &OperandTemplate::createInt8, &OperandTemplate::createInt8 };
-			return (this->*tab[0])(value);
+			return (this->*tab[type])(value);
 		}
+
+		// virtual std::string const & toString( void ) const{
+		// 	// const std::string & str = std::to_string(this->_value);
+		// 	const std::string & str = "YOLO";
+
+		// 	return str;
+		// }
 
 
 		/* Getters & Setters) */
@@ -59,6 +102,7 @@ class OperandTemplate : public IOperand {
 	private:
 		OperandTemplate<T, N>(){}
 		N 					_value;
+		eOperandType 		_type;
 };
 
 #endif

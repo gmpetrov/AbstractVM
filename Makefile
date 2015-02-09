@@ -6,7 +6,7 @@
 #    By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/03 16:31:34 by gpetrov           #+#    #+#              #
-#    Updated: 2015/02/05 16:44:07 by gpetrov          ###   ########.fr        #
+#    Updated: 2015/02/09 13:25:23 by gpetrov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS	= $(SRC_FILES:srcs/%.cpp=$(OBJ_DIR)/%.o)
 
 FLAGS	= -g -Wall -Wextra -Werror -pedantic
 
-CC 		= g++
+CC 		= g++ -std=c++11
 
 INC 	= -I includes
 
