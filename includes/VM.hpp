@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 18:46:30 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 19:05:17 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "Int16.hpp"
 # include "Int32.hpp"
 # include "Float.hpp"
+# include "Double.hpp"
 // # include <iomanip>
 
 

@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 18:48:42 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 19:38:41 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ int		main(int ac, char **av){
 
 		const Float *o = static_cast<const Float *>(n + m);
 		std::cout <<  "value = " << std::fixed << static_cast<float>(o->getValue()) << std::endl;
+
+		Double y(4.43);
+		Double x(42.42);
+
+		const Double *z = static_cast<const Double *>(x + y);
+		std::cout <<  "value = " << std::fixed << static_cast<double>(z->getValue()) << std::endl;
+		std::cout << "test to_string " << x.toString() << std::endl;
 
 	}
 	else

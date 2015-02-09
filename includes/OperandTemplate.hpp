@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 19:00:56 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 19:37:59 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class Int8;
 class Int16;
 class Int32;
 class Float;
+class Double;
 
 template <typename T, typename N>
 class OperandTemplate : public IOperand {
@@ -35,7 +36,7 @@ class OperandTemplate : public IOperand {
 		typedef enum { INT8 = 0, INT16 = 1, INT32 = 2, FLOAT = 3, DOUBLE = 4} eOperandType;
 		OperandTemplate<T, N>(N nb, int type){ this->_value = nb; this->_type = static_cast<eOperandType>(type); };
 		OperandTemplate<T, N>(const OperandTemplate<T, N> & src){ *this = src; };
-		~OperandTemplate<T, N>(){ };
+		~OperandTemplate<T, N>(){};
 		OperandTemplate<T, N> & 	operator=(OperandTemplate<T, N> const & rhs){ (void)rhs; return *this; };
 		virtual eOperandType getType(void) const{
 			return this->_type;
@@ -91,18 +92,20 @@ class OperandTemplate : public IOperand {
 			return new OperandTemplate<class Float, float>(atof(value.c_str()), this->getType());	
 		}
 
+		IOperand const * createDouble( std::string const & value ) const{
+			return new OperandTemplate<class Double, double>(atof(value.c_str()), this->getType());	
+		}
+
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const{
-			IOperand const * (OperandTemplate<T, N>::* tab[])(std::string const & value)const = { &OperandTemplate::createInt8, &OperandTemplate::createInt16, &OperandTemplate::createInt32, &OperandTemplate::createFloat };
+			IOperand const * (OperandTemplate<T, N>::* tab[])(std::string const & value)const = { &OperandTemplate::createInt8, &OperandTemplate::createInt16, &OperandTemplate::createInt32, &OperandTemplate::createFloat, &OperandTemplate::createDouble };
 			return (this->*tab[type])(value);
 		}
 
-		// virtual std::string const & toString( void ) const{
-		// 	// const std::string & str = std::to_string(this->_value);
-		// 	const std::string & str = "YOLO";
-
-		// 	return str;
-		// }
-
+		virtual std::string const & toString( void ) const{
+			static std::string str;
+			str = std::to_string(_value);
+			return str;
+		}
 
 		/* Getters & Setters) */
 
