@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Int16.hpp                                          :+:      :+:    :+:   */
+/*   Float.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/09 14:47:49 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 17:59:18 by gpetrov          ###   ########.fr       */
+/*   Created: 2015/02/09 17:58:16 by gpetrov           #+#    #+#             */
+/*   Updated: 2015/02/09 18:01:14 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INT16_HPP
-# define INT16_HPP
+#ifndef FLOAT_HPP
+# define FLOAT_HPP
 
 # include "OperandTemplate.hpp"
 
-class Int16 : public OperandTemplate<Int16, int16_t>{
+class Float : public OperandTemplate<Float, float>{
 	public:
-		Int16(int16_t nb);
-		Int16(const Int16 & src);
-		virtual ~Int16();
-		Int16 & 	operator=(Int16 const & rhs);
+		Float(float nb);
+		Float(const Float & src);
+		virtual ~Float();
+		Float & 	operator=(Float const & rhs);
 	private:
-		Int16();
+		Float();
 };
 
 #endif

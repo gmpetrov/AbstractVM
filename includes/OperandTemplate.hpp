@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 15:13:11 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 18:54:17 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@
 # include <typeinfo>
 # include <stdlib.h>
 # include <string>
+# include <math.h>
+// # include <sstream>
 // # include <boost/algorithm/string.hpp>
 # include "IOperand.hpp"
-// # include "OperandFactory.hpp"
-// # include "Int8.hpp"
-// # include "Int16.hpp"
+// # include <iomanip>
 
 class Int8;
 class Int16;
+class Int32;
+class Float;
 
 template <typename T, typename N>
 class OperandTemplate : public IOperand {
@@ -33,7 +35,7 @@ class OperandTemplate : public IOperand {
 		typedef enum { INT8 = 0, INT16 = 1, INT32 = 2, FLOAT = 3, DOUBLE = 4} eOperandType;
 		OperandTemplate<T, N>(N nb, int type){ this->_value = nb; this->_type = static_cast<eOperandType>(type); };
 		OperandTemplate<T, N>(const OperandTemplate<T, N> & src){ *this = src; };
-		~OperandTemplate<T, N>(){};
+		~OperandTemplate<T, N>(){ };
 		OperandTemplate<T, N> & 	operator=(OperandTemplate<T, N> const & rhs){ (void)rhs; return *this; };
 		virtual eOperandType getType(void) const{
 			return this->_type;
@@ -67,7 +69,7 @@ class OperandTemplate : public IOperand {
 
 		virtual IOperand const * operator%( IOperand const & rhs ) const{
 			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value % tmp->getValue())));
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(fmod(this->_value, tmp->getValue()))));
 			return ptr;
 		}
 
@@ -81,8 +83,16 @@ class OperandTemplate : public IOperand {
 			return new OperandTemplate<class Int16, int16_t>(atoi(value.c_str()), this->getType());	
 		}
 
+		IOperand const * createInt32( std::string const & value ) const{
+			return new OperandTemplate<class Int32, int32_t>(atoi(value.c_str()), this->getType());	
+		}
+
+		IOperand const * createFloat( std::string const & value ) const{
+			return new OperandTemplate<class Float, float>(atoi(value.c_str()), this->getType());	
+		}
+
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const{
-			IOperand const * (OperandTemplate<T, N>::* tab[])(std::string const & value)const = { &OperandTemplate::createInt8, &OperandTemplate::createInt8 };
+			IOperand const * (OperandTemplate<T, N>::* tab[])(std::string const & value)const = { &OperandTemplate::createInt8, &OperandTemplate::createInt16, &OperandTemplate::createInt32, &OperandTemplate::createFloat };
 			return (this->*tab[type])(value);
 		}
 

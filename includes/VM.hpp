@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 15:16:30 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 18:46:30 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include "pushCommand.hpp"
 # include "Int8.hpp"
 # include "Int16.hpp"
+# include "Int32.hpp"
+# include "Float.hpp"
+// # include <iomanip>
 
 
 class VM{

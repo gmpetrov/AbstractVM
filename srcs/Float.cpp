@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Int16.hpp                                          :+:      :+:    :+:   */
+/*   Float.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/09 14:47:49 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 17:59:18 by gpetrov          ###   ########.fr       */
+/*   Created: 2015/02/09 17:58:16 by gpetrov           #+#    #+#             */
+/*   Updated: 2015/02/09 18:25:25 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INT16_HPP
-# define INT16_HPP
+#include "Float.hpp"
 
-# include "OperandTemplate.hpp"
+Float::Float(float nb) : OperandTemplate<Float, float>(nb, 3){
 
-class Int16 : public OperandTemplate<Int16, int16_t>{
-	public:
-		Int16(int16_t nb);
-		Int16(const Int16 & src);
-		virtual ~Int16();
-		Int16 & 	operator=(Int16 const & rhs);
-	private:
-		Int16();
-};
+}
 
-#endif
+Float::Float(Float const & src) : OperandTemplate<Float, float>(src){
+	*this = src;
+}
+
+Float::~Float(){
+
+}
+
+Float & 	Float::operator=(Float const & rhs){
+	(void)rhs;
+	return *this;
+}
+
+/*GETTERS & SETTERS*/
