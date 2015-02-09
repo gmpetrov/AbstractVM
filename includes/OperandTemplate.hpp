@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 18:54:17 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/09 19:00:56 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ class OperandTemplate : public IOperand {
 		}
 
 		IOperand const * createFloat( std::string const & value ) const{
-			return new OperandTemplate<class Float, float>(atoi(value.c_str()), this->getType());	
+			return new OperandTemplate<class Float, float>(atof(value.c_str()), this->getType());	
 		}
 
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const{
