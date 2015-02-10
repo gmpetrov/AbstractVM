@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 21:24:27 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/10 21:53:27 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ VM::VM(char *file){
 		exit(0);
 	}
 	this->_stack = new std::vector<IOperand *>();
-	std::cout << "this->_fd" << std::endl;
 	this->parse(this->_fd);
 }
 
