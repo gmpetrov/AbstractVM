@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/04 16:54:11 by gmp               #+#    #+#             */
-/*   Updated: 2015/02/10 22:26:42 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/10 22:48:36 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <vector>
 # include <algorithm>
 
+void trimString(std::string & str);
+void rtrim(std::string & s);
+void ltrim(std::string & s);
 
 class Parser{
 
@@ -33,7 +36,7 @@ class Parser{
 		Parser(const Parser & src);
 		~Parser();
 		Parser & 	operator=(Parser const & rhs);
-		std::string 	readFile(int fd = 0);
+		std::vector<std::string> *readFile(int fd = 0);
 		std::vector<std::string> *splitString(std::string file);
 		std::vector<std::string> *split;
 };

@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 22:01:00 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/10 22:49:41 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ class VM{
 		/* GETTERS && SETTERS */
 		int		getFd()const;
 		std::vector<IOperand *>  *getStack();
+		std::vector<std::string> *getFile();
 	private:
 		int							_fd;
 		std::vector<IOperand *> 	*_stack;
+		std::vector<std::string> 	*_file;
 
 
 };

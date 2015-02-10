@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 21:53:27 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/10 22:50:03 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,6 @@ std::vector<IOperand *> *VM::getStack(){
 	return this->_stack;
 }
 
+std::vector<std::string> *VM::getFile(){
+	return this->_file;
+}
