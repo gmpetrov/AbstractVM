@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/04 16:54:05 by gmp               #+#    #+#             */
-/*   Updated: 2015/02/10 18:37:47 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/10 21:33:14 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,18 @@ Parser & 	Parser::operator=(Parser const & rhs){
 std::string Parser::readFile(int fd){
 	int ret;
 	std::stringstream file;
-	char buf[3];
+	char buf[2];
+	char tmp = 0;
 
-	buf[2] = 0;
-	while ((ret = read(fd, buf, 2)) != EOF){
-		if (buf[0] == ';' && buf[0] == ';')
+	buf[1] = 0;
+	while ((ret = read(fd, buf, 1)) != 0){
+		if (buf[0] == ';' && tmp == ';')
 			break ;
 		file << buf;
+		tmp = buf[0];
 		bzero(buf, 2);
 	}
-	std::cout << file << std::endl;
+	close(fd);
+	std::cout << file.str() << std::endl;
 	return file.str();
 }

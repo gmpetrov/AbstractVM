@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.cpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 18:30:17 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/10 21:24:27 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ VM::VM(char *file){
 		exit(0);
 	}
 	this->_stack = new std::vector<IOperand *>();
+	std::cout << "this->_fd" << std::endl;
+	this->parse(this->_fd);
 }
 
 VM::VM(VM const & src){
@@ -43,6 +45,12 @@ void 	VM::printStack(){
 	for (It = this->getStack()->begin(); It != this->getStack()->end(); It++){
 		std::cout << (*It)->toString() << std::endl;
 	}
+}
+
+void 	VM::parse(int fd){
+	Parser parser;
+
+	parser.readFile(fd);
 }
 
 void 	VM::parse(){

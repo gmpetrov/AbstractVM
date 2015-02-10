@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 18:12:25 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/10 21:20:22 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class VM{
 		~VM();
 		VM & 	operator=(VM const & rhs);
 		void 	parse();
+		void 	parse(int fd);
 		void 	printStack();
 
 		/* GETTERS && SETTERS */
