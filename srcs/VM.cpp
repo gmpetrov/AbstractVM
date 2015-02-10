@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.cpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/04 17:25:56 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/10 15:50:46 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 VM::VM(){
 	std::cout << "Constructor Called" << std::endl;
+	this->_stack = new std::vector<IOperand *>();
 }
 
 VM::VM(char *file){
@@ -40,4 +41,15 @@ VM & 	VM::operator=(VM const & rhs){
 
 int 	VM::getFd()const{
 	return this->_fd;
+}
+
+std::vector<IOperand *> *VM::getStack(){
+	return this->_stack;
+}
+
+void 	VM::printStack(){
+	std::vector<IOperand *>::iterator It;
+	for (It = this->getStack()->begin(); It != this->getStack()->end(); It++){
+		std::cout << (*It)->toString() << std::endl;
+	}
 }

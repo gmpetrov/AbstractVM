@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 19:38:41 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/10 15:51:25 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ int		main(int ac, char **av){
 
 		const Double *z = static_cast<const Double *>(x + y);
 		std::cout <<  "value = " << std::fixed << static_cast<double>(z->getValue()) << std::endl;
-		std::cout << "test to_string " << x.toString() << std::endl;
+
+		vm.getStack()->push_back(&x);
+		vm.getStack()->push_back(&d);
+
+		vm.printStack();
+		// for_each(vm.getStack().begin(), vm.getStack().end(), test);
 
 	}
 	else

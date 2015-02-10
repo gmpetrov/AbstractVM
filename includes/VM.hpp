@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/09 19:05:17 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/10 15:52:02 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 // # include <boost/algorithm/string.hpp>
 # include <fcntl.h>
+# include <vector>
+# include <algorithm>
 # include "pushCommand.hpp"
 # include "Int8.hpp"
 # include "Int16.hpp"
@@ -24,7 +26,6 @@
 # include "Float.hpp"
 # include "Double.hpp"
 // # include <iomanip>
-
 
 class VM{
 
@@ -35,11 +36,15 @@ class VM{
 		~VM();
 		VM & 	operator=(VM const & rhs);
 		void 	parse();
+		void 	printStack();
 
 		/* GETTERS && SETTERS */
 		int		getFd()const;
+		std::vector<IOperand *>  *getStack();
 	private:
-		int		_fd;
+		int							_fd;
+		std::vector<IOperand *> 	*_stack;
+
 
 };
 
