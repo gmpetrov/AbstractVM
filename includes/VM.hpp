@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 17:18:28 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/11 18:24:30 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ class VM{
 
 		/* COMMANDS */
 
-		void	push();
+		void	push(std::string);
 		void 	pop();
 		void 	dump();
-		void 	myAssert();
+		void 	myAssert(std::string);
 		void 	add();
 		void 	sub();
 		void 	mul();

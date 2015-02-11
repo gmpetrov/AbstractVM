@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 17:51:36 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/11 18:30:03 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 VM::VM(){
 	this->_stack = new std::vector<IOperand *>();
 	this->cmdList = new CommandMap();
-	commandListAdd("push") = &VM::push;
+	// commandListAdd("push") = &VM::push;
 	commandListAdd("pop") = &VM::pop;
 	commandListAdd("dump") = &VM::dump;
-	commandListAdd("assert") = &VM::myAssert;
+	// commandListAdd("assert") = &VM::myAssert;
 	commandListAdd("add") = &VM::add;
 	commandListAdd("sub") = &VM::sub;
 	commandListAdd("mul") = &VM::mul;
@@ -102,6 +102,14 @@ void 	VM::parseLine(std::string line, int nb){
 	else{
 		if (this->isCommand(*(cmd->begin())) == false)
 			throw VM::vmException("[ERROR] - On line " + std::to_string(nb) + " : Unknown Instruction");
+		else if ((*(cmd->begin())).compare("push") == 0 || (*(cmd->begin())).compare("assert") == 0){
+			if (cmd->size() < 2)
+				throw VM::vmException("[ERROR] - On line " + std::to_string(nb) + " : Missing Argument");
+			if ((*(cmd->begin())).compare("push") == 0)
+				this->push(*(cmd->begin() + 1));
+			else
+				this->myAssert(*(cmd->begin() + 1));
+		}
 		else
 			callCommand(*(cmd->begin()));
 	}
@@ -125,8 +133,8 @@ bool 	VM::isCommand(std::string cmd){
 
 /* COMMMANDS */
 
-void	VM::push(){
-	std::cout << "push" << std::endl;
+void	VM::push(std::string str){
+	std::cout << "push " << str << std::endl;
 	return ;
 }
 void	VM::pop(){
@@ -139,8 +147,8 @@ void	VM::dump(){
 	return ;
 }
 
-void	VM::myAssert(){
-	std::cout << "assert" << std::endl;
+void	VM::myAssert(std::string str){
+	std::cout << "assert " << str << std::endl;
 	return ;
 }
 
