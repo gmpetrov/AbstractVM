@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/04 16:54:11 by gmp               #+#    #+#             */
-/*   Updated: 2015/02/10 22:48:36 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/11 15:10:45 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <iostream>
 # include <sstream>
 // # include <boost/algorithm/string.hpp>
-# include "pushCommand.hpp"
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
@@ -37,7 +36,7 @@ class Parser{
 		~Parser();
 		Parser & 	operator=(Parser const & rhs);
 		std::vector<std::string> *readFile(int fd = 0);
-		std::vector<std::string> *splitString(std::string file);
+		std::vector<std::string> *splitString(std::string file, char c);
 		std::vector<std::string> *split;
 };
 

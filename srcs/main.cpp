@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 18:02:03 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/11 14:48:57 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "VM.hpp"
 
 int		main(int ac, char **av){
-	(void)av;
 	if (ac == 1)
 		VM vm;
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/04 16:54:05 by gmp               #+#    #+#             */
-/*   Updated: 2015/02/10 22:48:24 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/11 14:29:01 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,20 @@ std::vector<std::string> *Parser::readFile(int fd){
 		bzero(buf, 2);
 	}
 	close(fd);
-	this->split = this->splitString(file.str());
+	this->split = this->splitString(file.str(), '\n');
 	for_each(this->split->begin(), this->split->end(), ltrim);
 	for_each(this->split->begin(), this->split->end(), rtrim);
-	for_each(this->split->begin(), this->split->end(), printString);
+	// for_each(this->split->begin(), this->split->end(), printString);
 	return this->split;
 }
 
-std::vector<std::string> *Parser::splitString(std::string file){
+std::vector<std::string> *Parser::splitString(std::string file, char c){
 	std::vector<std::string> *sp = new std::vector<std::string>();
-	std::string::size_type tmp = file.find('\n');
+	std::string::size_type tmp = file.find(c);
 	while (tmp != std::string::npos){
 		sp->push_back(file.substr(0, tmp));
 		file = file.substr(tmp + 1);
-		tmp = file.find('\n');
+		tmp = file.find(c);
 	}
 	sp->push_back(file);
 	return sp;

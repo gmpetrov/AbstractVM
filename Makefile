@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+         #
+#    By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/03 16:31:34 by gpetrov           #+#    #+#              #
-#    Updated: 2015/02/10 21:34:00 by gmp              ###   ########.fr        #
+#    Updated: 2015/02/11 11:53:28 by gpetrov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ INC 	= -I includes
 all: $(NAME)
 
 $(NAME): MKDIR_OBJ_DIR $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(INC)
+	@$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 	@echo "\n=> Compiling AbstractVM [\033[32mDONE\033[m]"
 
 MKDIR_OBJ_DIR:

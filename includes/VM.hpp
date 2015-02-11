@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/10 22:49:41 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/11 17:18:28 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 # include <fcntl.h>
 # include <vector>
 # include <algorithm>
+# include <stdio.h>
+# include <stdlib.h>
+# include <map>
 # include "Parser.hpp"
-# include "pushCommand.hpp"
 # include "Int8.hpp"
 # include "Int16.hpp"
 # include "Int32.hpp"
@@ -28,9 +30,14 @@
 # include "Double.hpp"
 // # include <iomanip>
 
-class VM{
+# define commandListAdd cmdList->operator[]
+# define callCommand(x) (this->*(cmdList->operator[](x)))();
 
+class VM{
 	public:
+		typedef void (VM::*Command)(void);
+		typedef std::map<std::string, Command> CommandMap;
+		typedef enum { SYNTAX = 0, UNKNOWN = 1 } eERROR;
 		VM();
 		VM(char *);
 		VM(const VM & src);
@@ -39,15 +46,46 @@ class VM{
 		void 	parse();
 		void 	parse(int fd);
 		void 	printStack();
+		void 	exec();
+		void 	parseLine(std::string, int);
+		bool 	isCommand(std::string);
+
+		/* COMMANDS */
+
+		void	push();
+		void 	pop();
+		void 	dump();
+		void 	myAssert();
+		void 	add();
+		void 	sub();
+		void 	mul();
+		void 	myDiv();
+		void 	mod();
+		void 	print();
+		void 	myExit();
 
 		/* GETTERS && SETTERS */
 		int		getFd()const;
 		std::vector<IOperand *>  *getStack();
 		std::vector<std::string> *getFile();
+		/* EXCEPTION */
+		class vmException : public std::exception {
+			public:
+				vmException(std::string const &) throw();
+				vmException(vmException const & src) throw();
+				~vmException() throw();
+				vmException & operator=(vmException const & rhs) throw();
+				virtual const char *what() const throw();
+				std::string const			error;
+			private:
+				vmException() throw();
+		};
+		CommandMap 	*cmdList;
 	private:
-		int							_fd;
-		std::vector<IOperand *> 	*_stack;
-		std::vector<std::string> 	*_file;
+		int									_fd;
+		std::vector<IOperand *> 			*_stack;
+		std::vector<std::string> 			*_file;
+
 
 
 };
