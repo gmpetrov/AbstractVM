@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 18:30:03 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/11 18:33:40 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 VM::VM(){
 	this->_stack = new std::vector<IOperand *>();
 	this->cmdList = new CommandMap();
-	// commandListAdd("push") = &VM::push;
 	commandListAdd("pop") = &VM::pop;
 	commandListAdd("dump") = &VM::dump;
-	// commandListAdd("assert") = &VM::myAssert;
 	commandListAdd("add") = &VM::add;
 	commandListAdd("sub") = &VM::sub;
 	commandListAdd("mul") = &VM::mul;
