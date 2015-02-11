@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 17:34:13 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/11 17:51:36 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ void 	VM::parseLine(std::string line, int nb){
 	std::vector<std::string> *cmd;
 
 	cmd = parser.splitString(line, ' ');
-	if (cmd->size() > 3)
+	if ((*(cmd->begin()))[0] == ';')
+		;
+	else if (cmd->size() > 3)
 		throw VM::vmException("[ERROR] - On line " + std::to_string(nb) + " : Wrong Syntax");
 	else{
 		if (this->isCommand(*(cmd->begin())) == false)
