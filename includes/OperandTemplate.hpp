@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OperandTemplate.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 11:30:21 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/12 10:12:32 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class Double;
 template <typename T, typename N>
 class OperandTemplate : public IOperand {
 	public: 
+		// typedef enum { INT8 = 0, INT16 = 1, INT32 = 2, FLOAT = 3, DOUBLE = 4} eOperandType;
 		OperandTemplate<T, N>(N nb, int type){ this->_value = nb; this->_type = static_cast<eOperandType>(type); };
 		OperandTemplate<T, N>(const OperandTemplate<T, N> & src){ *this = src; };
 		~OperandTemplate<T, N>(){};

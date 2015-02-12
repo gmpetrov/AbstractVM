@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 16:31:39 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 19:03:49 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/12 11:45:32 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@
 
 int		main(int ac, char **av){
 
-	// std::string s = "Int8(3)";
-	// std::regex rgx(".*Int8((\\w+)).*");
-	// std::smatch match;
+	std::string s = "Int8(3.42)";
+	std::regex rgx("^(Int(8|16|32)|Float|Double)\\((\\d+\\.\\d+|\\d+)\\)$");
+	std::smatch match;
 
-	// if (std::regex_search(s, match, rgx))
- //        std::cout << "match: " << match[1] << '\n';
-	// return 0;
+	if (std::regex_search(s, match, rgx)){
+		std::cout << "match: " << match[3].str().size() << std::endl;
+	}
+	else
+		std::cout << "NULL" << std::endl;
+	return 0;
 	if (ac == 1)
 		VM vm;
 	else
