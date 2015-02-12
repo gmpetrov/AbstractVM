@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   VM.cpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/11 18:33:40 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/12 14:46:06 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "VM.hpp"
 
 VM::VM(){
-	this->_stack = new std::vector<IOperand *>();
+	this->_stack = new std::vector<IOperand const *>();
 	this->cmdList = new CommandMap();
 	commandListAdd("pop") = &VM::pop;
 	commandListAdd("dump") = &VM::dump;
@@ -24,6 +24,13 @@ VM::VM(){
 	commandListAdd("mod") = &VM::mod;
 	commandListAdd("print") = &VM::print;
 	commandListAdd("exit") = &VM::myExit;
+
+	this->opMap = new operandMap();
+	operandMapAdd("Int8") = &VM::NewInt8;
+	operandMapAdd("Int16") = &VM::NewInt16;
+	operandMapAdd("Int32") = &VM::NewInt32;
+	operandMapAdd("Float") = &VM::NewFloat;
+	operandMapAdd("Double") = &VM::NewDouble; 
 	this->parse();
 }
 
@@ -32,7 +39,7 @@ VM::VM(char *file){
 		std::cout << "File doesn't exist" << std::endl;
 		exit(0);
 	}
-	this->_stack = new std::vector<IOperand *>();
+	this->_stack = new std::vector<IOperand const *>();
 	this->parse(this->_fd);
 }
 
@@ -52,7 +59,7 @@ VM & 	VM::operator=(VM const & rhs){
 }
 
 void 	VM::printStack(){
-	std::vector<IOperand *>::iterator It;
+	std::vector<IOperand const *>::iterator It;
 	for (It = this->getStack()->begin(); It != this->getStack()->end(); It++){
 		std::cout << (*It)->toString() << std::endl;
 	}
@@ -104,7 +111,7 @@ void 	VM::parseLine(std::string line, int nb){
 			if (cmd->size() < 2)
 				throw VM::vmException("[ERROR] - On line " + std::to_string(nb) + " : Missing Argument");
 			if ((*(cmd->begin())).compare("push") == 0)
-				this->push(*(cmd->begin() + 1));
+				this->push(*(cmd->begin() + 1), nb);
 			else
 				this->myAssert(*(cmd->begin() + 1));
 		}
@@ -129,10 +136,60 @@ bool 	VM::isCommand(std::string cmd){
 	return false;
 }
 
+IOperand const * VM::NewInt8(std::string val){
+	std::cout << "NewInt8()" << std::endl;
+	OperandTemplate<Int8, int8_t> op(42, 0);
+
+	return op.createOperand(IOperand::INT8, val);
+}
+
+IOperand const * VM::NewInt16(std::string val){
+	std::cout << "NewInt16()" << std::endl;
+	OperandTemplate<Int16, int16_t> op(42, 1);
+
+	return op.createOperand(IOperand::INT16, val);
+}
+
+IOperand const * VM::NewInt32(std::string val){
+	std::cout << "NewInt32()" << std::endl;
+	OperandTemplate<Int32, int32_t> op(42, 2);
+
+	return op.createOperand(IOperand::INT32, val);
+}
+
+IOperand const * VM::NewFloat(std::string val){
+	std::cout << "NewFloat()" << std::endl;
+	OperandTemplate<Float, float> op(42, 3);
+
+	return op.createOperand(IOperand::FLOAT, val);
+}
+
+IOperand const * VM::NewDouble(std::string val){
+	std::cout << "NewDouble()" << std::endl;
+	OperandTemplate<Double, double> op(42, 4);
+
+	return op.createOperand(IOperand::DOUBLE, val);
+}
+
 /* COMMMANDS */
 
-void	VM::push(std::string str){
-	std::cout << "push " << str << std::endl;
+void	VM::push(std::string str, int line){
+	// std::string s = "Int8(3.42)";
+	std::regex rgx("^(Int(8|16|32)|Float|Double)\\((\\d+\\.\\d+|\\d+)\\)$");
+	std::smatch match;
+
+	if (std::regex_search(str, match, rgx)){
+		if (match[1].str().compare("Int") == 0){
+			// this->getStack()->push_back( callOP("Int" + match[2].str(), match[3].str()) ));
+			this->getStack()->push_back( (this->*(opMap->operator[]("Int" + match[2].str())))(match[3].str()) );
+		}
+		else
+			this->getStack()->push_back( (this->*(opMap->operator[](match[1].str())))(match[3].str()) );
+		// else
+		// 	this->getStack()->push_back( callOP(match[1].str(), match[3].str()) ));
+	}
+	else
+		throw VM::vmException("[ERROR] - On line " + std::to_string(line) + " : Invalid Argument");
 	return ;
 }
 void	VM::pop(){
@@ -142,6 +199,7 @@ void	VM::pop(){
 
 void	VM::dump(){
 	std::cout << "dump" << std::endl;
+	this->printStack();
 	return ;
 }
 
@@ -193,7 +251,7 @@ int 	VM::getFd()const{
 	return this->_fd;
 }
 
-std::vector<IOperand *> *VM::getStack(){
+std::vector<IOperand const *> *VM::getStack(){
 	return this->_stack;
 }
 

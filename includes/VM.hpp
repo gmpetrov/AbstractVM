@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 10:12:22 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/12 14:41:26 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,23 @@
 # include "Int32.hpp"
 # include "Float.hpp"
 # include "Double.hpp"
+# include <regex>
 // # include <iomanip>
 
 # define commandListAdd cmdList->operator[]
 # define callCommand(x) (this->*(cmdList->operator[](x)))();
 
+# define operandMapAdd opMap->operator[]
+# define callOP(x, y) (this->*(opMap->operator[](x)))(y);
+
 class VM{
 	public:
 		typedef void (VM::*Command)(void);
 		typedef std::map<std::string, Command> CommandMap;
+
+		typedef IOperand const *(VM::*OP)(std::string);
+		typedef std::map<std::string, OP> operandMap;
+
 		typedef enum { SYNTAX = 0, UNKNOWN = 1 } eERROR;
 		VM();
 		VM(char *);
@@ -49,10 +57,15 @@ class VM{
 		void 	exec();
 		void 	parseLine(std::string, int);
 		bool 	isCommand(std::string);
+		IOperand const *NewInt8(std::string);
+		IOperand const *NewInt16(std::string val);
+		IOperand const *NewInt32(std::string val);
+		IOperand const *NewFloat(std::string val);
+		IOperand const *NewDouble(std::string val);
 
 		/* COMMANDS */
 
-		void	push(std::string);
+		void	push(std::string, int);
 		void 	pop();
 		void 	dump();
 		void 	myAssert(std::string);
@@ -66,7 +79,7 @@ class VM{
 
 		/* GETTERS && SETTERS */
 		int		getFd()const;
-		std::vector<IOperand *>  *getStack();
+		std::vector<IOperand const *>  *getStack();
 		std::vector<std::string> *getFile();
 		/* EXCEPTION */
 		class vmException : public std::exception {
@@ -81,13 +94,11 @@ class VM{
 				vmException() throw();
 		};
 		CommandMap 	*cmdList;
+		operandMap 	*opMap;
 	private:
 		int									_fd;
-		std::vector<IOperand *> 			*_stack;
+		std::vector<IOperand const *> 			*_stack;
 		std::vector<std::string> 			*_file;
-
-
-
 };
 
 #endif
