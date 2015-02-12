@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 14:41:26 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/12 15:44:12 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 
 # define operandMapAdd opMap->operator[]
 # define callOP(x, y) (this->*(opMap->operator[](x)))(y);
+
+# define REVERSE_STACK std::reverse(this->getStack()->begin(), this->getStack()->end());
 
 class VM{
 	public:
