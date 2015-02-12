@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 10:12:32 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/12 17:16:14 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,18 @@ class OperandTemplate : public IOperand {
 		virtual eOperandType getType(void) const{
 			return this->_type;
 		}
+		virtual int getPrecision( void ) const{
+			return static_cast<int>(this->getType());
+		}
 
 		/* OPERATORS OVERLOAD */
 
 		virtual OperandTemplate<T, N> const * operator+(IOperand const & rhs) const{
-			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value + tmp->getValue())));
+			eOperandType type = (this->getPrecision() <= rhs.getPrecision() ? this->getType() : rhs.getType());
+
+			const OperandTemplate<T, N> *tmp = static_cast<const OperandTemplate<T, N>* >(&rhs);
+			std::cout << "TEST " << tmp->getValue() << std::endl;
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
 			return ptr;
 		}
 

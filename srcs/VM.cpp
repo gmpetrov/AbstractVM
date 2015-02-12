@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 15:54:37 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/12 19:48:03 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void 	VM::exec(){
 		parseLine(*It, line);
 		line++;
 	}
+		throw VM::vmException("[ERROR] - Missing exit command");	
 }
 
 bool 	VM::isCommand(std::string cmd){
@@ -212,22 +213,42 @@ void	VM::add(){
 }
 
 void	VM::sub(){
-	std::cout << "sub" << std::endl;
+	if (this->getStack()->size() < 2)
+		throw VM::vmException("[ERROR] - sub on a stack size < 2"); 
+	this->getStack()->push_back( (*(*(this->getStack()->begin())) - *(*(this->getStack()->begin() + 1))) );
+	this->pop();
+	this->pop();
 	return ;
 }
 
 void	VM::mul(){
-	std::cout << "mul" << std::endl;
+	if (this->getStack()->size() < 2)
+		throw VM::vmException("[ERROR] - mul on a stack size < 2"); 
+	this->getStack()->push_back( (*(*(this->getStack()->begin())) * *(*(this->getStack()->begin() + 1))) );
+	this->pop();
+	this->pop();
 	return ;
 }
 
 void	VM::myDiv(){
-	std::cout << "div" << std::endl;
+	if (this->getStack()->size() < 2)
+		throw VM::vmException("[ERROR] - div on a stack size < 2");
+	if ((*(*(this->getStack()->begin()))).toString().compare("0") == 0)
+		throw VM::vmException("[ERROR] - div by 0");
+	this->getStack()->push_back( (*(*(this->getStack()->begin() + 1)) / *(*(this->getStack()->begin()))) );
+	this->pop();
+	this->pop();
 	return ;
 }
 
 void	VM::mod(){
-	std::cout << "mod" << std::endl;
+	if (this->getStack()->size() < 2)
+		throw VM::vmException("[ERROR] - mod on a stack size < 2");
+	if ((*(*(this->getStack()->begin()))).toString().compare("0") == 0)
+		throw VM::vmException("[ERROR] - mod by 0");
+	this->getStack()->push_back( (*(*(this->getStack()->begin() + 1)) % *(*(this->getStack()->begin()))) );
+	this->pop();
+	this->pop();
 	return ;
 }
 
@@ -237,7 +258,7 @@ void	VM::print(){
 }
 
 void	VM::myExit(){
-	std::cout << "myExit" << std::endl;
+	exit(0);
 	return ;
 }
 
