@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OperandTemplate.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 17:16:14 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/13 11:46:32 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ class OperandTemplate : public IOperand {
 		/* OPERATORS OVERLOAD */
 
 		virtual OperandTemplate<T, N> const * operator+(IOperand const & rhs) const{
-			eOperandType type = (this->getPrecision() <= rhs.getPrecision() ? this->getType() : rhs.getType());
+			// eOperandType type = (this->getPrecision() <= rhs.getPrecision() ? this->getType() : rhs.getType());
 
-			const OperandTemplate<T, N> *tmp = static_cast<const OperandTemplate<T, N>* >(&rhs);
-			std::cout << "TEST " << tmp->getValue() << std::endl;
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
+			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			// const OperandTemplate<T, N> *tmp = static_cast<const OperandTemplate<T, N>* >(&rhs);
+			// std::cout << "TEST " << tmp->getValue() << std::endl;
+			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value + tmp->getValue())));
+
+			// const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
 			return ptr;
 		}
 

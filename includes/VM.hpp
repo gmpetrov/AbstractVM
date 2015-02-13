@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 15:44:12 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/13 12:11:18 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ class VM{
 		VM(const VM & src);
 		~VM();
 		VM & 	operator=(VM const & rhs);
+		void	initContainers();
 		void 	parse();
 		void 	parse(int fd);
 		void 	printStack();

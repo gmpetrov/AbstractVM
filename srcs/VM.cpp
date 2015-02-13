@@ -3,16 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   VM.cpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/12 20:06:46 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/13 12:13:50 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "VM.hpp"
 
 VM::VM(){
+	this->initContainers();
+	this->parse();
+}
+
+VM::VM(char *file){
+	if ((this->_fd = open(file, O_RDONLY)) == -1){
+		std::cout << "File doesn't exist" << std::endl;
+		exit(0);
+	}
+	this->initContainers();
+	this->parse(this->_fd);
+}
+
+VM::VM(VM const & src){
+	*this = src;
+}
+
+VM::~VM(){
+	delete this->_stack;
+	delete this->_file;
+	delete this->cmdList;
+}
+
+VM & 	VM::operator=(VM const & rhs){
+	this->_fd = rhs.getFd();
+	return *this;
+}
+
+void	VM::initContainers(){
 	this->_stack = new std::vector<IOperand const *>();
 	this->cmdList = new CommandMap();
 	commandListAdd("pop") = &VM::pop;
@@ -31,31 +60,6 @@ VM::VM(){
 	operandMapAdd("int32") = &VM::NewInt32;
 	operandMapAdd("float") = &VM::NewFloat;
 	operandMapAdd("double") = &VM::NewDouble; 
-	this->parse();
-}
-
-VM::VM(char *file){
-	if ((this->_fd = open(file, O_RDONLY)) == -1){
-		std::cout << "File doesn't exist" << std::endl;
-		exit(0);
-	}
-	this->_stack = new std::vector<IOperand const *>();
-	this->parse(this->_fd);
-}
-
-VM::VM(VM const & src){
-	*this = src;
-}
-
-VM::~VM(){
-	delete this->_stack;
-	delete this->_file;
-	delete this->cmdList;
-}
-
-VM & 	VM::operator=(VM const & rhs){
-	this->_fd = rhs.getFd();
-	return *this;
 }
 
 void 	VM::printStack(){
@@ -130,7 +134,7 @@ void 	VM::exec(){
 		parseLine(*It, line);
 		line++;
 	}
-	// throw VM::vmException("[ERROR] - Missing exit command");
+	throw VM::vmException("[ERROR] - Missing exit command");
 }
 
 bool 	VM::isCommand(std::string cmd){
@@ -172,15 +176,15 @@ IOperand const * VM::NewDouble(std::string val){
 /* COMMMANDS */
 
 void	VM::push(std::string str, int line){
-	std::cout << str << std::endl;
 	std::regex rgx("^(int(8|16|32)|float|double)\\((\\d+\\.\\d+|\\d+)\\)$");
 	std::smatch match;
 	if (std::regex_search(str, match, rgx)){
-		if (match[1].str().compare("int") == 0){
-			this->getStack()->push_back( (this->*(opMap->operator[]("int" + match[2].str())))(match[3].str()) );
-		}
-		else
+		// if (match[1].str().compare("int") == 0){
+		// 	this->getStack()->push_back( (this->*(opMap->operator[](/*"int" + */match[2].str())))(match[3].str()) );
+		// }
+		// else{
 			this->getStack()->push_back( (this->*(opMap->operator[](match[1].str())))(match[3].str()));
+		// }
 		// REVERSE_STACK
 	}
 	else
