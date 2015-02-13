@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/13 12:11:18 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/13 17:06:54 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ class VM{
 
 		typedef IOperand const *(VM::*OP)(std::string);
 		typedef std::map<std::string, OP> operandMap;
-
-		typedef enum { SYNTAX = 0, UNKNOWN = 1 } eERROR;
 		VM();
 		VM(char *);
 		VM(const VM & src);

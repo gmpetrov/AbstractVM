@@ -1,5 +1,6 @@
-push int32(42)
-push int32(33)
+push double(42)
+push float(2)
+dump
 add
 dump
 exit

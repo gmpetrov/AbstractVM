@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/13 12:13:50 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/13 15:14:36 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ void 	VM::printStack(){
 		std::cout << (*It)->toString() << std::endl;
 	}
 }
+
+// void 	printStack2(IOperand const *op){
+// 	std::cout << op->toString() << std::endl;
+// }
 
 void 	VM::parse(int fd){
 	Parser parser;
@@ -169,7 +173,7 @@ IOperand const * VM::NewFloat(std::string val){
 
 IOperand const * VM::NewDouble(std::string val){
 	OperandTemplate<Double, double> op(42, 4);
-
+	std::cout << "FUCK" << std::endl;
 	return op.createOperand(IOperand::DOUBLE, val);
 }
 
@@ -202,6 +206,7 @@ void	VM::pop(){
 
 void	VM::dump(){
 	this->printStack();
+	// for_each(this->getStack()->begin(), this->getStack()->end(), printStack2);
 	return ;
 }
 
@@ -212,8 +217,9 @@ void	VM::myAssert(std::string str){
 
 void	VM::add(){
 	if (this->getStack()->size() < 2)
-		throw VM::vmException("[ERROR] - add on a stack size < 2"); 
-	this->getStack()->push_back( (*(*(this->getStack()->begin())) + *(*(this->getStack()->begin() + 1))) );
+		throw VM::vmException("[ERROR] - add on a stack size < 2");
+	// std::cout << (*(*(this->getStack()->begin() + 1))).toString() << std::endl;
+	this->getStack()->push_back( *(*(this->getStack()->begin())) + *(*(this->getStack()->begin() + 1)) );
 	this->pop();
 	this->pop();
 	return ;
