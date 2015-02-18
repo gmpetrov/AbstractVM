@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/13 15:14:36 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/18 13:51:40 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ IOperand const * VM::NewFloat(std::string val){
 
 IOperand const * VM::NewDouble(std::string val){
 	OperandTemplate<Double, double> op(42, 4);
-	std::cout << "FUCK" << std::endl;
+	// std::cout << "FUCK" << std::endl;
 	return op.createOperand(IOperand::DOUBLE, val);
 }
 

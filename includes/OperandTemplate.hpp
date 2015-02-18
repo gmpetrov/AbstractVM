@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/05 13:09:09 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/13 17:47:27 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/18 16:05:50 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,64 +50,164 @@ class OperandTemplate : public IOperand {
 		virtual OperandTemplate<T, N> const * operator+(IOperand const & rhs) const{
 			eOperandType type = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
 
-			// if (this->getType() == 0){
-			// 	const OperandTemplate<Int8, int8_t> *tmp = static_cast<const OperandTemplate<Int8, int8_t>* >(&rhs);
-			// 	const OperandTemplate<Int8, int8_t> *ptr = static_cast<const OperandTemplate<Int8, int8_t> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
-			// 	return ptr;
-			// }
-			// else if (this->getType() == 1){
-			// 	const OperandTemplate<Int16, int16_t> *tmp = static_cast<const OperandTemplate<Int16, int16_t>* >(&rhs);
-			// 	const OperandTemplate<Int16, int16_t> *ptr = static_cast<const OperandTemplate<Int16, int16_t> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
-			// 	return ptr;
-			// }
-			// else if (this->getType() == 2){
-			// 	const OperandTemplate<Int32, int32_t> *tmp = static_cast<const OperandTemplate<Int32, int32_t>* >(&rhs);
-			// 	const OperandTemplate<Int32, int32_t> *ptr = static_cast<const OperandTemplate<Int32, int32_t> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
-			// 	return ptr;
-			// }
-			// else if (this->getType() == 3){
-			// 	const OperandTemplate<Float, float> *tmp = static_cast<const OperandTemplate<Float, float>* >(&rhs);
-			// 	const OperandTemplate<Float, float> *ptr = static_cast<const OperandTemplate<Float, float> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
-			// 	return ptr;
-			// }
-			// else if (this->getType() == 4){
-			// 	const OperandTemplate<Double, double> *tmp = static_cast<const OperandTemplate<Double, double>* >(&rhs);
-			// 	const OperandTemplate<Double, double> *ptr = static_cast<const OperandTemplate<Double, double> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
-			// 	return ptr;
-			// }
+			// std::cout << "ULTIMATE TEST : " << rhs.getType() << std::endl;
+			// const OperandTemplate<Float, float> *tmp = static_cast<const OperandTemplate<class Float, float>* >(&rhs);
+			// std::cout << "ZBRA TEST : " << static_cast< const OperandTemplate<Int32, int32_t> *>(&rhs)->getValue() << std::endl;
+			// std::cout << "FLUTE TEST : " << tmp->getValue() << std::endl;
+			// std::cout << "YOLO TEST : " << this->getValue() << std::endl;
+			// const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
 
-			std::cout << "TYPE : " << this->getType() << std::endl;
-			std::cout << "TYPE : " << rhs.getType() << std::endl;
-			std::cout << "TYPE : " << type << std::endl;
-			const OperandTemplate<T, N> *tmp = static_cast<const OperandTemplate<T, N>* >(&rhs);
-			printf("%d\n", tmp->getValue());
-			std::cout << "test" << std::endl << tmp->getValue() << std::endl;
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + tmp->getValue())));
-			return ptr;
+			/* FUCKING UGLY WAY */
+
+			if (rhs.getType() == 0){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + static_cast< const OperandTemplate<Int8, int8_t> *>(&rhs)->getValue())));
+				return ptr;
+			}
+			else if (rhs.getType() == 1){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + static_cast< const OperandTemplate<Int16, int16_t> *>(&rhs)->getValue())));
+				return ptr;
+
+			}
+			else if (rhs.getType() == 2){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + static_cast< const OperandTemplate<Int32, int32_t> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else if (rhs.getType() == 3){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + static_cast< const OperandTemplate<Float, float> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else{
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value + static_cast< const OperandTemplate<Double, double> *>(&rhs)->getValue())));
+				return ptr;
+			}
 		}
 
 		virtual IOperand const * operator-( IOperand const & rhs ) const{
-			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value - tmp->getValue())));
-			return ptr;
+			eOperandType type = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
+
+			// const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			// const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value - tmp->getValue())));
+			// return ptr;
+
+			if (rhs.getType() == 0){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value - static_cast< const OperandTemplate<Int8, int8_t> *>(&rhs)->getValue())));
+				return ptr;
+			}
+			else if (rhs.getType() == 1){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value - static_cast< const OperandTemplate<Int16, int16_t> *>(&rhs)->getValue())));
+				return ptr;
+
+			}
+			else if (rhs.getType() == 2){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value - static_cast< const OperandTemplate<Int32, int32_t> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else if (rhs.getType() == 3){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value - static_cast< const OperandTemplate<Float, float> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else{
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value - static_cast< const OperandTemplate<Double, double> *>(&rhs)->getValue())));
+				return ptr;
+			}
 		}
 
 		virtual IOperand const * operator*( IOperand const & rhs ) const{
-			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value * tmp->getValue())));
-			return ptr;
+			eOperandType type = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
+
+			// const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			// const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value * tmp->getValue())));
+			// return ptr;
+
+			if (rhs.getType() == 0){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value * static_cast< const OperandTemplate<Int8, int8_t> *>(&rhs)->getValue())));
+				return ptr;
+			}
+			else if (rhs.getType() == 1){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value * static_cast< const OperandTemplate<Int16, int16_t> *>(&rhs)->getValue())));
+				return ptr;
+
+			}
+			else if (rhs.getType() == 2){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value * static_cast< const OperandTemplate<Int32, int32_t> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else if (rhs.getType() == 3){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value * static_cast< const OperandTemplate<Float, float> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else{
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value * static_cast< const OperandTemplate<Double, double> *>(&rhs)->getValue())));
+				return ptr;
+			}
+
 		}
 
 		virtual IOperand const * operator/( IOperand const & rhs ) const{
-			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
-			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value / tmp->getValue())));
-			return ptr;
+			eOperandType type = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
+
+			// const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
+			// const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(this->_value / tmp->getValue())));
+			// return ptr;
+
+			if (rhs.getType() == 0){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value / static_cast< const OperandTemplate<Int8, int8_t> *>(&rhs)->getValue())));
+				return ptr;
+			}
+			else if (rhs.getType() == 1){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value / static_cast< const OperandTemplate<Int16, int16_t> *>(&rhs)->getValue())));
+				return ptr;
+
+			}
+			else if (rhs.getType() == 2){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value / static_cast< const OperandTemplate<Int32, int32_t> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else if (rhs.getType() == 3){
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value / static_cast< const OperandTemplate<Float, float> *>(&rhs)->getValue())));					
+				return ptr;
+
+			}
+			else{
+				const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value / static_cast< const OperandTemplate<Double, double> *>(&rhs)->getValue())));
+				return ptr;
+			}			
 		}
 
 		virtual IOperand const * operator%( IOperand const & rhs ) const{
+			eOperandType type = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
+			
 			const OperandTemplate<T, N> *tmp = dynamic_cast<const OperandTemplate<T, N>* >(&rhs);
 			const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(this->getType(), std::to_string(fmod(this->_value, tmp->getValue()))));
 			return ptr;
+
+			// if (rhs.getType() == 0){
+			// 	const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value % static_cast< const OperandTemplate<Int8, int8_t> *>(&rhs)->getValue())));
+			// 	return ptr;
+			// }
+			// else if (rhs.getType() == 1){
+			// 	const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value % static_cast< const OperandTemplate<Int16, int16_t> *>(&rhs)->getValue())));
+			// 	return ptr;
+			// }
+			// else if (rhs.getType() == 2){
+			// 	const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value % static_cast< const OperandTemplate<Int32, int32_t> *>(&rhs)->getValue())));					
+			// 	return ptr;
+			// }
+			// else if (rhs.getType() == 3){
+			// 	const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value % static_cast< const OperandTemplate<Float, float> *>(&rhs)->getValue())));					
+			// 	return ptr;
+			// }
+			// else{
+			// 	const OperandTemplate<T, N> *ptr = static_cast<const OperandTemplate<T, N> *>(this->createOperand(type, std::to_string(this->_value % static_cast< const OperandTemplate<Double, double> *>(&rhs)->getValue())));
+			// 	return ptr;
+			// }
 		}
 
 		/* Factory */
