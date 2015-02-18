@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/18 13:51:40 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/18 17:26:19 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,14 +198,16 @@ void	VM::push(std::string str, int line){
 void	VM::pop(){
 	if (this->getStack()->empty())
 		throw VM::vmException("[ERROR] - pop on an empty stack"); 
-	REVERSE_STACK
+	// REVERSE_STACK
 	this->getStack()->pop_back();
-	REVERSE_STACK
+	// REVERSE_STACK
 	return ;
 }
 
 void	VM::dump(){
+	REVERSE_STACK
 	this->printStack();
+	REVERSE_STACK
 	// for_each(this->getStack()->begin(), this->getStack()->end(), printStack2);
 	return ;
 }

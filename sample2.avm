@@ -1,6 +1,7 @@
-push int32(2)
+push int32(39)
+push int32(3)
 push float(42.42)
-dump
-mod
+push int16(56)
+pop
 dump
 exit
