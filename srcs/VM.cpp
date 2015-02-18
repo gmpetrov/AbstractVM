@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/18 17:26:19 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/18 18:32:22 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,6 @@ void	VM::push(std::string str, int line){
 		// else{
 			this->getStack()->push_back( (this->*(opMap->operator[](match[1].str())))(match[3].str()));
 		// }
-		// REVERSE_STACK
 	}
 	else
 		throw VM::vmException("[ERROR] - On line " + std::to_string(line) + " : Invalid Argument");
@@ -213,7 +212,36 @@ void	VM::dump(){
 }
 
 void	VM::myAssert(std::string str){
-	std::cout << "assert " << str << std::endl;
+	std::string val = (*(*(this->getStack()->end() - 1))).toString();
+	std::regex rgx("^(int(8|16|32)|float|double)\\((\\d+\\.\\d+|\\d+)\\)$");
+	std::smatch match;
+
+	if (std::regex_search(str, match, rgx)){
+		if (match[1].str().compare("int8") == 0){
+			if (val.compare(match[3].str()) != 0)
+				throw VM::vmException("[ERROR] - Assert");
+		}
+		else if (match[1].str().compare("int16") == 0){
+			if (val.compare(match[3].str()) != 0)
+				throw VM::vmException("[ERROR] - Assert");
+		}
+		else if (match[1].str().compare("int32") == 0){
+			if (val.compare(match[3].str()) != 0)
+				throw VM::vmException("[ERROR] - Assert");
+		}
+		else if (match[1].str().compare("float") == 0){
+			if (val.compare(match[3].str()) != 0)
+				throw VM::vmException("[ERROR] - Assert");
+		}
+		else if (match[1].str().compare("double") == 0){
+			if (val.compare(match[3].str()) != 0)
+				throw VM::vmException("[ERROR] - Assert");
+		}
+		else
+			throw VM::vmException("[ERROR] - Invalid Argument given to assert command");
+	}
+	else
+		throw VM::vmException("[ERROR] - Invalid Argument given to assert command");
 	return ;
 }
 
