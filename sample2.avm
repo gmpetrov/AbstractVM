@@ -1,6 +1,6 @@
 push int32(2)
 push float(42.42)
 dump
-add
+mod
 dump
 exit
