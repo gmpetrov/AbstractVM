@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:36 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/13 17:06:54 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/02/19 18:28:46 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ class VM{
 		void 	exec();
 		void 	parseLine(std::string, int);
 		bool 	isCommand(std::string);
+
+		/*OverFlow checking*/
+
+		void 	checkAddOverflow();
+		void 	checkSubOverflow();
+		void 	checkMulOverflow();
+
 		IOperand const *NewInt8(std::string);
 		IOperand const *NewInt16(std::string val);
 		IOperand const *NewInt32(std::string val);

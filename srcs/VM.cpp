@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/19 17:30:11 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/19 18:27:50 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,31 +245,60 @@ void	VM::myAssert(std::string str){
 	return ;
 }
 
+void 	VM::checkAddOverflow(){
+	int a = std::atoi((*(*(this->getStack()->end() - 1 ))).toString().c_str());
+	int b = std::atoi((*(*(this->getStack()->end() - 2 ))).toString().c_str());
+	if ((a > 0 && b > 0 && (a + b) < 0))
+		throw VM::vmException("[ERROR] - Alert OVERFLOW");
+	else if ((a < 0 && b < 0 && (a + b) > 0))
+		throw VM::vmException("[ERROR] - Alert UNDERFLOW");
+}
+
+void 	VM::checkSubOverflow(){
+	int a = std::atoi((*(*(this->getStack()->end() - 1 ))).toString().c_str());
+	int b = std::atoi((*(*(this->getStack()->end() - 2 ))).toString().c_str());
+	if ((a > 0 && b > 0 && (a - b) < 0))
+		throw VM::vmException("[ERROR] - Alert OVERFLOW");
+	else if ((a < 0 && b < 0 && (a - b) > 0))
+		throw VM::vmException("[ERROR] - Alert UNDERFLOW");
+}
+
+void 	VM::checkMulOverflow(){
+	int a = std::atoi((*(*(this->getStack()->end() - 1 ))).toString().c_str());
+	int b = std::atoi((*(*(this->getStack()->end() - 2 ))).toString().c_str());
+	if ((a > 0 && b > 0 && (a * b) < 0))
+		throw VM::vmException("[ERROR] - Alert OVERFLOW");
+	else if ((a < 0 && b < 0 && (a * b) > 0))
+		throw VM::vmException("[ERROR] - Alert UNDERFLOW");
+}
+
 void	VM::add(){
 	if (this->getStack()->size() < 2)
 		throw VM::vmException("[ERROR] - add on a stack size < 2");
-	// std::cout << (*(*(this->getStack()->begin() + 1))).toString() << std::endl;
+	this->checkAddOverflow();
 	this->getStack()->push_back( *(*(this->getStack()->begin())) + *(*(this->getStack()->begin() + 1)) );
-	this->getStack()->erase(this->getStack()->begin());
-	this->getStack()->erase(this->getStack()->begin());
+	this->getStack()->erase(this->getStack()->end() - 3);
+	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;
 }
 
 void	VM::sub(){
 	if (this->getStack()->size() < 2)
 		throw VM::vmException("[ERROR] - sub on a stack size < 2"); 
+	this->checkSubOverflow();
 	this->getStack()->push_back( (*(*(this->getStack()->begin())) - *(*(this->getStack()->begin() + 1))) );
-	this->getStack()->erase(this->getStack()->begin());
-	this->getStack()->erase(this->getStack()->begin());
+	this->getStack()->erase(this->getStack()->end() - 3);
+	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;
 }
 
 void	VM::mul(){
 	if (this->getStack()->size() < 2)
 		throw VM::vmException("[ERROR] - mul on a stack size < 2"); 
+	this->checkMulOverflow();
 	this->getStack()->push_back( (*(*(this->getStack()->begin())) * *(*(this->getStack()->begin() + 1))) );
-	this->getStack()->erase(this->getStack()->begin());
-	this->getStack()->erase(this->getStack()->begin());
+	this->getStack()->erase(this->getStack()->end() - 3);
+	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;
 }
 
@@ -279,8 +308,8 @@ void	VM::myDiv(){
 	if ((*(*(this->getStack()->begin()))).toString().compare("0") == 0)
 		throw VM::vmException("[ERROR] - div by 0");
 	this->getStack()->push_back( (*(*(this->getStack()->begin() + 1)) / *(*(this->getStack()->begin()))) );
-	this->getStack()->erase(this->getStack()->begin());
-	this->getStack()->erase(this->getStack()->begin());
+	this->getStack()->erase(this->getStack()->end() - 3);
+	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;
 }
 
@@ -290,13 +319,16 @@ void	VM::mod(){
 	if ((*(*(this->getStack()->begin()))).toString().compare("0") == 0)
 		throw VM::vmException("[ERROR] - mod by 0");
 	this->getStack()->push_back( (*(*(this->getStack()->begin() + 1)) % *(*(this->getStack()->begin()))) );
-	this->getStack()->erase(this->getStack()->begin());
-	this->getStack()->erase(this->getStack()->begin());
+	this->getStack()->erase(this->getStack()->end() - 3);
+	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;
 }
 
 void	VM::print(){
-	std::cout << "print" << std::endl;
+	if ( (*(*(this->getStack()->end() - 1))).getType() != 0)
+		throw VM::vmException("[ERROR] - Print - top stack value is not a 8bits integer");
+	int to_char = std::atoi((*(*(this->getStack()->end() - 1))).toString().c_str());
+	std::cout << static_cast<char>(to_char) << std::endl;
 	return ;
 }
 

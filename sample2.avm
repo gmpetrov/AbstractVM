@@ -1,7 +1,5 @@
-push int32(39)
-push int32(3)
-push float(42.42)
-push int16(56)
+push int32(2000000000)
+push int32(2000000000)
 add
 dump
 exit
