@@ -6,7 +6,7 @@
 /*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/19 18:27:50 by gmp              ###   ########.fr       */
+/*   Updated: 2015/02/19 20:48:49 by gmp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,27 +249,27 @@ void 	VM::checkAddOverflow(){
 	int a = std::atoi((*(*(this->getStack()->end() - 1 ))).toString().c_str());
 	int b = std::atoi((*(*(this->getStack()->end() - 2 ))).toString().c_str());
 	if ((a > 0 && b > 0 && (a + b) < 0))
-		throw VM::vmException("[ERROR] - Alert OVERFLOW");
+		throw VM::vmException("[ERROR] - Alert OVERFLOW in add command");
 	else if ((a < 0 && b < 0 && (a + b) > 0))
-		throw VM::vmException("[ERROR] - Alert UNDERFLOW");
+		throw VM::vmException("[ERROR] - Alert UNDERFLOW in add command");
 }
 
 void 	VM::checkSubOverflow(){
 	int a = std::atoi((*(*(this->getStack()->end() - 1 ))).toString().c_str());
 	int b = std::atoi((*(*(this->getStack()->end() - 2 ))).toString().c_str());
-	if ((a > 0 && b > 0 && (a - b) < 0))
-		throw VM::vmException("[ERROR] - Alert OVERFLOW");
-	else if ((a < 0 && b < 0 && (a - b) > 0))
-		throw VM::vmException("[ERROR] - Alert UNDERFLOW");
+	if (b < 0 && a > 0 && (b - a) > 0)
+		throw VM::vmException("[ERROR] - Alert OVERFLOW in sub command");
+	else if (b > 0 && a < 0 && (b - a) < 0)
+		throw VM::vmException("[ERROR] - Alert UNDERFLOW in sub command");
 }
 
 void 	VM::checkMulOverflow(){
 	int a = std::atoi((*(*(this->getStack()->end() - 1 ))).toString().c_str());
 	int b = std::atoi((*(*(this->getStack()->end() - 2 ))).toString().c_str());
 	if ((a > 0 && b > 0 && (a * b) < 0))
-		throw VM::vmException("[ERROR] - Alert OVERFLOW");
+		throw VM::vmException("[ERROR] - Alert OVERFLOW in mul command");
 	else if ((a < 0 && b < 0 && (a * b) > 0))
-		throw VM::vmException("[ERROR] - Alert UNDERFLOW");
+		throw VM::vmException("[ERROR] - Alert UNDERFLOW in mul command");
 }
 
 void	VM::add(){
