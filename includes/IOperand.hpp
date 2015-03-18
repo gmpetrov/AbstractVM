@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IOperand.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/04 17:51:27 by gmp               #+#    #+#             */
-/*   Updated: 2015/02/12 16:27:05 by gmp              ###   ########.fr       */
+/*   Updated: 2015/03/18 16:31:45 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ class IOperand {
 			virtual IOperand const * operator*( IOperand const & rhs ) const = 0; // Product
 			virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
 			virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
-			
 			virtual std::string const & toString( void ) const = 0; // String representation of the instance
 			virtual ~IOperand( void ) {}
 

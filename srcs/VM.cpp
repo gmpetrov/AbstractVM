@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VM.cpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmp <gmp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/02/19 20:48:49 by gmp              ###   ########.fr       */
+/*   Updated: 2015/03/18 16:26:52 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	VM::initContainers(){
 	operandMapAdd("int16") = &VM::NewInt16;
 	operandMapAdd("int32") = &VM::NewInt32;
 	operandMapAdd("float") = &VM::NewFloat;
-	operandMapAdd("double") = &VM::NewDouble; 
+	operandMapAdd("double") = &VM::NewDouble;
 }
 
 void 	VM::printStack(){
@@ -85,7 +85,7 @@ void 	VM::parse(int fd){
 		exit(0);
 	}
 	catch(std::exception e){
-		std::cout << e.what() << std::endl;	
+		std::cout << e.what() << std::endl;
 		exit(0);
 	}
 }
@@ -101,7 +101,7 @@ void 	VM::parse(){
 		std::cout << e.what() << std::endl;
 	}
 	catch(std::exception e){
-		std::cout << e.what() << std::endl;	
+		std::cout << e.what() << std::endl;
 	}
 }
 
@@ -115,7 +115,9 @@ void 	VM::parseLine(std::string line, int nb){
 	else if (cmd->size() > 3)
 		throw VM::vmException("[ERROR] - On line " + std::to_string(nb) + " : Wrong Syntax");
 	else{
-		if (this->isCommand(*(cmd->begin())) == false)
+		if (line.compare("") == 0)
+			;
+		else if (this->isCommand(*(cmd->begin())) == false)
 			throw VM::vmException("[ERROR] - On line " + std::to_string(nb) + " : Unknown Instruction");
 		else if ((*(cmd->begin())).compare("push") == 0 || (*(cmd->begin())).compare("assert") == 0){
 			if (cmd->size() < 2)
@@ -196,7 +198,7 @@ void	VM::push(std::string str, int line){
 }
 void	VM::pop(){
 	if (this->getStack()->empty())
-		throw VM::vmException("[ERROR] - pop on an empty stack"); 
+		throw VM::vmException("[ERROR] - pop on an empty stack");
 	// REVERSE_STACK
 	this->getStack()->pop_back();
 	// REVERSE_STACK
@@ -284,7 +286,7 @@ void	VM::add(){
 
 void	VM::sub(){
 	if (this->getStack()->size() < 2)
-		throw VM::vmException("[ERROR] - sub on a stack size < 2"); 
+		throw VM::vmException("[ERROR] - sub on a stack size < 2");
 	this->checkSubOverflow();
 	this->getStack()->push_back( (*(*(this->getStack()->begin())) - *(*(this->getStack()->begin() + 1))) );
 	this->getStack()->erase(this->getStack()->end() - 3);
@@ -294,7 +296,7 @@ void	VM::sub(){
 
 void	VM::mul(){
 	if (this->getStack()->size() < 2)
-		throw VM::vmException("[ERROR] - mul on a stack size < 2"); 
+		throw VM::vmException("[ERROR] - mul on a stack size < 2");
 	this->checkMulOverflow();
 	this->getStack()->push_back( (*(*(this->getStack()->begin())) * *(*(this->getStack()->begin() + 1))) );
 	this->getStack()->erase(this->getStack()->end() - 3);
