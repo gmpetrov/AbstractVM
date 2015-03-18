@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/03/18 16:26:52 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/03/18 17:05:07 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,13 +231,15 @@ void	VM::myAssert(std::string str){
 			if (val.compare(match[3].str()) != 0)
 				throw VM::vmException("[ERROR] - Assert");
 		}
-		else if (match[1].str().compare("float") == 0){
+		else if (atof(val.c_str()) != atof(match[3].str().c_str())){
 			if (val.compare(match[3].str()) != 0)
 				throw VM::vmException("[ERROR] - Assert");
 		}
 		else if (match[1].str().compare("double") == 0){
-			if (val.compare(match[3].str()) != 0)
+			if (atof(val.c_str()) != atof(match[3].str().c_str()))
 				throw VM::vmException("[ERROR] - Assert");
+			// if (val.compare(match[3].str()) != 0)
+			// 	throw VM::vmException("[ERROR] - Assert");
 		}
 		else
 			throw VM::vmException("[ERROR] - Invalid Argument given to assert command");
