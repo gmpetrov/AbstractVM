@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/06/03 12:00:14 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/06/03 12:57:28 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,9 @@ void	VM::dump(){
 }
 
 void	VM::myAssert(std::string str){
+	if (this->getStack()->size() == 0){
+		throw VM::vmException("[ERROR] - Assert");
+	}
 	std::string val = (*(*(this->getStack()->end() - 1))).toString();
 	std::regex rgx("^(int(8|16|32)|float|double)\\((\\d+\\.\\d+|\\d+)\\)$");
 	std::smatch match;
@@ -309,9 +312,9 @@ void	VM::mul(){
 void	VM::myDiv(){
 	if (this->getStack()->size() < 2)
 		throw VM::vmException("[ERROR] - div on a stack size < 2");
-	if ((*(*(this->getStack()->begin()))).toString().compare("0") == 0)
+	if ((*(*(this->getStack()->begin() + 1))).toString().compare("0") == 0)
 		throw VM::vmException("[ERROR] - div by 0");
-	this->getStack()->push_back( (*(*(this->getStack()->begin() + 1)) / *(*(this->getStack()->begin()))) );
+	this->getStack()->push_back( (*(*(this->getStack()->begin())) / *(*(this->getStack()->begin() + 1))) );
 	this->getStack()->erase(this->getStack()->end() - 3);
 	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;
@@ -320,9 +323,9 @@ void	VM::myDiv(){
 void	VM::mod(){
 	if (this->getStack()->size() < 2)
 		throw VM::vmException("[ERROR] - mod on a stack size < 2");
-	if ((*(*(this->getStack()->begin()))).toString().compare("0") == 0)
+	if ((*(*(this->getStack()->begin() + 1))).toString().compare("0") == 0)
 		throw VM::vmException("[ERROR] - mod by 0");
-	this->getStack()->push_back( (*(*(this->getStack()->begin() + 1)) % *(*(this->getStack()->begin()))) );
+	this->getStack()->push_back( (*(*(this->getStack()->begin())) % *(*(this->getStack()->begin() + 1))) );
 	this->getStack()->erase(this->getStack()->end() - 3);
 	this->getStack()->erase(this->getStack()->end() - 2);
 	return ;

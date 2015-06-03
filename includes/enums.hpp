@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 12:01:30 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/06/03 12:25:01 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/06/03 12:42:55 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ENUMS_HPP
 
 enum  eOperandType
-{ 	INT8,
+{ 	INT8 = 0,
 	INT16,
 	INT32,
 	FLOAT,
