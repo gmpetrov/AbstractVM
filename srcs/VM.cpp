@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/03/18 17:05:07 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/06/03 12:00:14 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,31 +152,31 @@ bool 	VM::isCommand(std::string cmd){
 IOperand const * VM::NewInt8(std::string val){
 	OperandTemplate<Int8, int8_t> op(42, 0);
 
-	return op.createOperand(IOperand::INT8, val);
+	return op.createOperand(INT8, val);
 }
 
 IOperand const * VM::NewInt16(std::string val){
 	OperandTemplate<Int16, int16_t> op(42, 1);
 
-	return op.createOperand(IOperand::INT16, val);
+	return op.createOperand(INT16, val);
 }
 
 IOperand const * VM::NewInt32(std::string val){
 	OperandTemplate<Int32, int32_t> op(42, 2);
 
-	return op.createOperand(IOperand::INT32, val);
+	return op.createOperand(INT32, val);
 }
 
 IOperand const * VM::NewFloat(std::string val){
 	OperandTemplate<Float, float> op(42, 3);
 
-	return op.createOperand(IOperand::FLOAT, val);
+	return op.createOperand(FLOAT, val);
 }
 
 IOperand const * VM::NewDouble(std::string val){
 	OperandTemplate<Double, double> op(42, 4);
 	// std::cout << "FUCK" << std::endl;
-	return op.createOperand(IOperand::DOUBLE, val);
+	return op.createOperand(DOUBLE, val);
 }
 
 /* COMMMANDS */
