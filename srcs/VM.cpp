@@ -6,11 +6,12 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/06/04 11:10:35 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/06/04 13:28:15 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "VM.hpp"
+#include <dirent.h>
 
 VM::VM(){
 	this->initContainers();
@@ -20,6 +21,10 @@ VM::VM(){
 VM::VM(char *file){
 	if ((this->_fd = open(file, O_RDONLY)) == -1){
 		std::cout << "File doesn't exist" << std::endl;
+		exit(0);
+	}
+	if (opendir(file) != NULL){
+		std::cout << "Invalid input" << std::endl;
 		exit(0);
 	}
 	this->initContainers();
