@@ -6,7 +6,7 @@
 /*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/03 17:30:29 by gpetrov           #+#    #+#             */
-/*   Updated: 2015/06/03 12:57:28 by gpetrov          ###   ########.fr       */
+/*   Updated: 2015/06/04 11:10:35 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,8 @@ void	VM::mod(){
 }
 
 void	VM::print(){
+	if (this->getStack()->size() == 0)
+		throw VM::vmException("[ERROR] - Print instruction on an empty stack");
 	if ( (*(*(this->getStack()->end() - 1))).getType() != 0)
 		throw VM::vmException("[ERROR] - Print - top stack value is not a 8bits integer");
 	int to_char = std::atoi((*(*(this->getStack()->end() - 1))).toString().c_str());
